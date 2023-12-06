@@ -11,16 +11,21 @@
       :price="iphone.price"
       :description="iphone.description"
       @view-description="showDescriptionPopup"
-      @confirm-purchase="confirmPurchase"
+      @confirm-purchase="confirmPurchase(iphone.id)"
     />
-    <!-- Confirmation Popup -->
+
+    <!-- Purchase Confirmation Popup -->
     <div v-if="confirmData" class="confirmation-popup">
-      <p>Name: {{ userName }}</p>
-      <p>Email: {{ userEmail }}</p>
-      <p>Locale: {{ userLocale }}</p>
-      <p>Confirm purchase of {{ confirmData.title }} for ${{ confirmData.price }}?</p>
-      <button @click="executePurchase">Yes</button>
-      <button @click="confirmData = null">No</button>
+      <div class="confirmation-content">
+        <p>Name: {{ userData.name }}</p>
+        <p>Email: {{ userData.email }}</p>
+        <p>Locale: {{ userData.locale }}</p>
+        <p>Confirm purchase of {{ confirmData.title }} for ${{ confirmData.price }}?</p>
+        <div class="confirmation-buttons">
+          <button @click="executePurchase">Yes</button>
+          <button @click="confirmData = null">No</button>
+        </div>
+      </div>
     </div>
 
     <!-- Simple Popup for Description -->
@@ -35,6 +40,7 @@
 import { ref, onMounted } from 'vue';
 import { getFirestore, collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import Card from '@/components/Card.vue';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 export default {
   components: {
@@ -45,19 +51,30 @@ export default {
     const activeDescription = ref(null);
     const confirmData = ref(null);
     const db = getFirestore();
+    const auth = getAuth();
 
-    // Replace these with actual user data fetching logic
-    const userName = 'John Doe';
-    const userEmail = 'john@example.com';
-    const userLocale = 'en-US';
+    const userData = ref({
+      name: null,
+      email: null,
+      locale: null,
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Fetch user details
+        userData.value.name = user.displayName;
+        userData.value.email = user.email;
+        // Add more user data fetching logic if needed
+      }
+    });
 
     onMounted(async () => {
-      const querySnapshot = await getDocs(collection(db, "inventory"));
-      iphones.value = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const querySnapshot = await getDocs(collection(db, 'inventory'));
+      iphones.value = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     });
 
     const confirmPurchase = (id) => {
-      const iphone = iphones.value.find(phone => phone.id === id);
+      const iphone = iphones.value.find((phone) => phone.id === id);
       if (iphone) {
         confirmData.value = { ...iphone, id };
       }
@@ -82,6 +99,7 @@ export default {
     // Stub for the confetti display function
     const showConfetti = () => {
       // Implement confetti display logic
+      console.log('Confetti effect displayed!');
     };
 
     return {
@@ -90,18 +108,19 @@ export default {
       confirmData,
       executePurchase,
       showDescriptionPopup,
-      userName,
-      userEmail,
-      userLocale,
+      userData,
       showConfetti,
+      confirmPurchase, // Expose the confirmPurchase function
     };
   },
 };
 </script>
 
-<style>
+<style scoped>
 /* Existing styles */
+
 .popup, .confirmation-popup {
+  display: none;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -115,4 +134,17 @@ export default {
 .confirmation-popup {
   z-index: 1001;
 }
+
+.confirmation-popup.show, .popup.show {
+  display: block;
+}
+
+.confirmation-content {
+  text-align: center;
+}
+
+.confirmation-buttons {
+  margin-top: 20px;
+}
+
 </style>
