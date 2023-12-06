@@ -52,7 +52,7 @@ export default {
 </script>
 
 <style scoped>
-/* Add your specific styles for the Home view here */
+@import '../assets/main.css';
 
 .apple-theme {
   font-family: 'Helvetica Neue', Arial, sans-serif;

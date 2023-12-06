@@ -1,35 +1,29 @@
-/* @import './base.css';
+@import './base.css';
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
 
-  font-weight: normal;
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #ffffff; /* You can change the color as needed */
 }
 
-a,
-.green {
+p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  color: #ffffff; /* You can change the color as needed */
+}
+
+.button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: #4285f4; /* You can change the color as needed */
+  color: #fff;
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+.button:hover {
+  background-color: #3367d6; /* You can change the hover color as needed */
 }
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-} */
