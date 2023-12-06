@@ -1,35 +1,44 @@
 <template>
-    <div class="card">
-      <img :src="image" alt="iPhone Image" class="card-image" />
-      <div class="card-content">
-        <h2 class="card-title">{{ title }}</h2>
-        <!-- Display Rating -->
-        <div class="rating">
-          <span v-for="n in 5" :key="n" class="star" v-bind:class="{ 'filled': n <= rating }">★</span>
-        </div>
-        <!-- Display Price -->
-        <p class="price">${{ price.toFixed(2) }}</p>
-        <div class="buttons">
-          <button class="btn" @click="redirectToApple">View iPhone Model</button>
-          <button class="btn" @click="redirectToApple">View Description</button>
-          <button class="btn primary" @click="redirectToApple">Purchase iPhone</button>
-        </div>
+  <div class="card">
+    <img :src="image" alt="iPhone Image" class="card-image" />
+    <div class="card-content">
+      <h2 class="card-title">{{ title }}</h2>
+      <!-- Display Rating -->
+      <div class="rating">
+        <span v-for="n in 5" :key="n" class="star" v-bind:class="{ 'filled': n <= rating }">★</span>
+      </div>
+      <!-- Display Price -->
+      <p class="price">${{ price.toFixed(2) }}</p>
+      <div class="buttons">
+        <button class="btn" @click="redirectToApple">View iPhone Model</button>
+        <button class="btn" @click="showDescription">View Description</button>
+        <button class="btn primary" @click="confirmPurchase">Purchase iPhone</button>
       </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    props: ['title', 'image', 'rating', 'price'],
-    methods: {
-      redirectToApple() {
-        window.location.href = 'https://www.apple.com/';
-      },
+  </div>
+</template>
+
+<script>
+export default {
+  props: ['title', 'image', 'rating', 'price', 'description', 'id'],
+methods: {
+  confirmPurchase() {
+      // Emit an event with the phone's ID
+      this.$emit('confirm-purchase', this.id);
     },
-  };
-  </script>
+  showDescription() {
+    // Emit an event when the description button is clicked
+    this.$emit('view-description', this.description);
+  },
+  redirectToApple() {
+    window.location.href = 'https://www.apple.com/';
+  },
+},
+};
+</script>
   
-  <style scoped>
+
+<style scoped>
 .card {
   font-family: 'Helvetica Neue', Arial, sans-serif;
   border: 1px solid #e1e1e8;
