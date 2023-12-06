@@ -28,12 +28,12 @@
 <script>
 import { ref } from 'vue';
 import { collection, addDoc } from 'firebase/firestore';
-import { db } from '@/firebase'; // Make sure this is the correct import based on your project setup
+import { db } from '../../firebase.js'
 
 export default {
   setup() {
     const iphoneName = ref('');
-    const rating = ref('5'); // Default to highest rating
+    const rating = ref(5); // Default to highest rating
     const description = ref('');
     const pictureURL = ref('');
     const price = ref(0);
@@ -41,7 +41,7 @@ export default {
     const submitForm = async () => {
       try {
         // Reference to the Firebase 'iphones' collection
-        const iphoneCollection = collection(db, 'iphones');
+        const iphoneCollection = collection(db, 'inventory');
         // Create and add a new document with the form data
         const docRef = await addDoc(iphoneCollection, {
           name: iphoneName.value,

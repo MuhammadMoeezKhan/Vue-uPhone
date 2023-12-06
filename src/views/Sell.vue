@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import SellForm from '@/components/SellForm.vue';
-import { usePhoneStorage } from '@/stores/phoneStorage';
+import SellForm from '../components/SellForm.vue'
+import { usePhoneStorage } from '../stores/phoneStorage';
 
 export default {
   name: 'Sell',
