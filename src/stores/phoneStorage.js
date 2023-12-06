@@ -1,28 +1,15 @@
-// import { ref, computed } from 'vue'
-// import { defineStore } from 'pinia'
-
-// export const useCounterStore = defineStore('counter', () => {
-//   const count = ref(0)
-//   const doubleCount = computed(() => count.value * 2)
-//   function increment() {
-//     count.value++
-//   }
-
-//   return { count, doubleCount, increment }
-// })
-
 import { defineStore } from 'pinia';
-import { db } from '@/firebase';
+import  { db }  from '../../firebase.js'
 
 export const usePhoneStorage = defineStore({
   id: 'phoneStorage',
   state: () => ({
-    soldIPHones: [],
+    listedPhones: [],
   }),
   actions: {
     async sellIphone(iphone) {
       try {
-        await db.collection('soldIPHones').add(iphone);
+        await db.collection('inventory').add(iphone);
       } catch (error) {
         console.error('Error selling iPhone:', error);
       }
