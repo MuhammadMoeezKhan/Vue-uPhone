@@ -1,4 +1,10 @@
 <template>
+  <img
+    src="https://media.karousell.com/media/photos/products/2022/9/19/apple_iphone_12_64gb_1663598912_35031561_progressive.jpg"
+    alt="Left Image"
+    class="left-image"
+  />
+
   <form @submit.prevent="submitForm">
     <label for="iphoneName">iPhone Name:</label>
     <input v-model="iphoneName" type="text" id="iphoneName" required />
@@ -23,12 +29,16 @@
 
     <button type="submit">Submit</button>
   </form>
+  <div>
+    <CustomPopup v-if="showPopup" @closePopup="showPopup = false" />
+  </div>
 </template>
 
 <script>
 import { ref } from 'vue';
 import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../../firebase.js'
+import { db } from '../../firebase.js';
+import confetti from 'canvas-confetti'; // Import the canvas-confetti library
 
 export default {
   setup() {
@@ -37,6 +47,21 @@ export default {
     const description = ref('');
     const pictureURL = ref('');
     const price = ref(0);
+    const showPopup = ref(false);
+
+    const showConfetti = () => {
+      const duration = 10 * 1000; // Duration in milliseconds (10 seconds)
+
+      // Configure confetti settings
+      confetti({
+        particleCount: 200,
+        spread: 200,
+        origin: { y: 0.6 },
+      });
+
+      // Clear confetti after the specified duration
+      setTimeout(() => confetti.reset(), duration);
+    };
 
     const submitForm = async () => {
       try {
@@ -59,13 +84,18 @@ export default {
         pictureURL.value = '';
         price.value = 0;
 
-        // Additional logic if needed, like redirecting to a confirmation page
+        // Show the pop-up
+        showPopup.value = true;
+        // Show confetti
+        
+        showConfetti();
+        window.alert('Your form has been submitted!');
       } catch (error) {
         console.error('Error adding iPhone:', error);
       }
     };
 
-    return { iphoneName, rating, description, pictureURL, price, submitForm };
+    return { iphoneName, rating, description, pictureURL, price, submitForm, showPopup };
   },
 };
 </script>
@@ -146,5 +176,28 @@ form::after {
     padding: 10px;
     font-size: 14px;
   }
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: 50px auto;
+}
+
+.left-image,
+.right-image {
+  max-width: 200px; /* Adjust the size as needed */
+  height: auto;
+}
+
+form {
+  flex-grow: 1;
+  max-width: 600px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 </style>
