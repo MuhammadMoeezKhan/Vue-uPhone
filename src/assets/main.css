@@ -4,14 +4,14 @@
 h1 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
-  color: #ffffff; /* You can change the color as needed */
+  color: #000000; /* You can change the color as needed */
 }
 
 p {
-  font-size: 1.2rem;
+  font-size: 1rem;
   line-height: 1.6;
   margin-bottom: 1.5rem;
-  color: #ffffff; /* You can change the color as needed */
+  color: #232323; /* You can change the color as needed */
 }
 
 .button {
