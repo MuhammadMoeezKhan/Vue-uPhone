@@ -10,6 +10,7 @@ import SellForm from '@/components/SellForm.vue';
 //import { usePhoneStorage } from '@/stores/phoneStorage';
 
 export default {
+  name: 'Sell',
   components: {
     SellForm,
   },
