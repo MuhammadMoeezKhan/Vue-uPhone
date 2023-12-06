@@ -26,8 +26,8 @@
   }
   
   .navbar-logo {
-    height: 60px; /* Set the height of your logo */
-    margin-right: 80rem; /* Add some space between the logo and the nav links */
+    height: 3rem; /* Set the height of your logo */
+    margin-right: 60rem; /* Add some space between the logo and the nav links */
   }
   
   .nav-links {

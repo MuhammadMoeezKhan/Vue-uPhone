@@ -4,6 +4,8 @@ import { createPinia } from 'pinia';
 import { createRouter, createWebHistory } from 'vue-router';
 import '../firebase.js'
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import 'bootstrap/dist/css/bootstrap.css' // Import Bootstrap CSS
+import 'bootstrap/dist/js/bootstrap.js' // Import Bootstrap JavaScript
 
 const router = createRouter({
   history: createWebHistory(),
