@@ -10,30 +10,32 @@
       <!-- Display Price -->
       <p class="price">${{ price.toFixed(2) }}</p>
       <div class="buttons">
-        <button class="btn" @click="redirectToApple">View iPhone Model</button>
-        <button class="btn" @click="showDescription">View Description</button>
-        <button class="btn primary" @click="confirmPurchase">Purchase iPhone</button>
-      </div>
+      <button class="btn" @click="redirectToApple">View iPhone Model</button>
+      <button class="btn" @click="showDescription">View Description</button>
+      <button class="btn primary" @click="confirmPurchase">Purchase iPhone</button>
     </div>
+  </div>
   </div>
 </template>
 
 <script>
 export default {
   props: ['title', 'image', 'rating', 'price', 'description', 'id'],
-methods: {
-  confirmPurchase() {
+  
+  methods: {
+    confirmPurchase() {
       // Emit an event with the phone's ID
+      console.log('Emitting confirm-purchase event with ID:', this.title);
       this.$emit('confirm-purchase', this.id);
     },
-  showDescription() {
-    // Emit an event when the description button is clicked
-    this.$emit('view-description', this.description);
+    showDescription() {
+      // Emit an event when the description button is clicked
+      this.$emit('view-description', this.description);
+    },
+    redirectToApple() {
+      window.location.href = 'https://www.apple.com/';
+    },
   },
-  redirectToApple() {
-    window.location.href = 'https://www.apple.com/';
-  },
-},
 };
 </script>
   
